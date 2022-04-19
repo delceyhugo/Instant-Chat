@@ -17,14 +17,22 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      let socket = io();
-      document.querySelector('#form').addEventListener('submit', (e) =>{
-          e.preventDefault();
-          if(document.querySelector('#input').value){
-              socket.emit('newMessage', document.querySelector('#input').value)
-              document.querySelector('#input').value = ''
-          }
-      })
+        let socket = io();
+        // Emit
+        document.querySelector('#form').addEventListener('submit', (e) =>{
+            e.preventDefault();
+            if(document.querySelector('#input').value){
+                socket.emit('newMessage', document.querySelector('#input').value)
+                document.querySelector('#input').value = ''
+            }
+        })
+        // Listener
+        socket.on('newMessage', (data) => {
+            let el = document.createElement('li')
+            el.textContent = data
+            document.querySelector('#messages').appendChild(el)
+            window.scrollTo(0, document.body.scrollHeight)
+        })
     </script>
 </body>
 
