@@ -12,6 +12,21 @@
     <form id="form" action="">
         <input id="input" autocomplete="off" /><button>Send</button>
     </form>
+
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      let socket = io();
+      document.querySelector('#form').addEventListener('submit', (e) =>{
+          e.preventDefault();
+          if(document.querySelector('#input').value){
+              socket.emit('newMessage', document.querySelector('#input').value)
+              document.querySelector('#input').value = ''
+          }
+      })
+    </script>
 </body>
+
 
 </html>

@@ -1,11 +1,27 @@
+// Express
 const express = require('express')
 const app = express()
+
+
+// Socket IO
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
 
 // Middleware
 app.get('/', (req, res) =>{
     res.sendFile(__dirname + '/index.html');
 })
+io.on('connection', (socket) => {
+    console.log('a user connected');
+    socket.on('newMessage', (data) => {
+        console.log('message: ' + data)
+    })
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+});
 
 
-
-app.listen(3000)
+server.listen(3000)
